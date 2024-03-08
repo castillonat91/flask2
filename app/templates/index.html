@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,inicial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/style.css')}}">
+</head>
+<body>
+<div class="container">
+    <h1>LISTADO DE USUARIOS</h1>
+    <table>
+
+    <tr>
+        <th>CODIGO</th>
+        <th>NOMBRE</th>
+        <th>APELLIDO</th>
+        <th>EMAIL</th>
+        <th>DIRECCION</th>
+        <th>TELEFONO</th>
+        <th>USUARIO</th>
+
+    </tr>
+
+        <tbody>
+            {% for personas in personas %}
+            <tr>
+                <td>{{personas[0] }}</td>
+                <td>{{personas[1] }}</td>
+                <td>{{personas[2] }}</td>
+                <td>{{personas[3] }}</td>
+                <td>{{personas[4] }}</td>
+                <td>{{personas[5] }}</td>
+                <td>{{personas[6]}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        
+
+
+
+    
+    
+    
+    
+    
+    
+    
+    </table>
+</div>
+
+
+
+</body>
+
+</html>
+
+

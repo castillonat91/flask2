@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,inicial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/registro.css')}}">
+    <title>EDITAR</title>
+</head>
+<body>
+<div class="container">
+    <h1>EDITAR USUARIOS</h1>
+    <form class="formu" method="post" action="">
+        <div class='formuario'>
+        <label>CODIGO:</label>
+        <input type="number" name="codigo" value="{{ usuario [0] }}" disabled>
+        <label>NOMBRE</label>
+        <input type="text" placheloder"ingrese su nombre" type="number" name="nombre" value="{{ usuario [0] }}"><br>
+        <label>APELLIDO</label>
+        <input type="text" placheloder"ingrese su apellido" type="number" name="apellido" value="{{ usuario [0] }}"><br>
+        <label>EMAIL</label>
+        <input type="text" placheloder"ingrese su correo" type="number" name="email" value="{{ usuario [0] }}"><br>
+        <label>DIRECCION</label>
+        <input type="text" placheloder"ingrese su direccion" type="number" name="direccion" value="{{ usuario [0] }}"><br>
+        <label>TELEFONO</label>
+        <input type="text" placheloder"ingrese su telefono" type="number" name="telefono" value="{{ usuario [0] }}"><br>
+        <label>USUARIO</label>
+        <input type="text" placheloder"ingrese su usuario" type="number" name="usuario" value="{{ usuario [0] }}"><br>
+        <label>CONTRASEÑA</label>
+        <input type="password" placheloder"ingrese su contraseña" type="number" name="contraseña" value="{{ usuario [0] }}"><br>
+        <button type="submit">Registrar</button>
+    </form>
+
+
+
+
+
+
+</div>
+
+</body>
+
+</html>
