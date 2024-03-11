@@ -1,4 +1,5 @@
-from flask import Flask,  request, render_template, redirect, url_for, flash
+from flask import Flask,  request, render_template, redirect, url_for, flash,session
+import bcrypt
 import mysql.connector
 
 #creamos una instancia de la clase flask
@@ -10,35 +11,63 @@ db = mysql.connector.connect(
     host="localhost",
     user="root",
     password="",
-    database="AGENDA2024"
+    database="AGENDA2025"
 )
 cursor = db.cursor()
 
+
+def encriptarcontra(contraencrip):
+
+    encriptar = bcrypt.hashpw(contraencrip.encode('utf-8'),bcrypt.gensalt())
+    return encriptar
+
+@app.route('/login', methods=['GET','PSOT'])
+def login():
+    if request.method =='POST':
+        username= request.form.get('txtusuario')
+        password= request.form.get('txtcontrasena')
+
+        cursor = db.cursor()
+        cursor.execute('SELECT usuarioper, contraper FROM Personas where usuarioper = %s', (username,))
+        usuarios = cursor.fetchone()
+
+        if usuarios and bcrypt.check_password_hash(usuarios[7],password):
+            session['usuario'] = username
+            return redirect(url_for('lista'))
+        else:
+            error='Credenciales invalidas. por favor intentarlo de nuevo'
+            return render_template('sesion.html', error=error)
+    return render_template('sesion.html')
+        
 #definir rutas
 @app.route('/')
 def lista():
     cursor = db.cursor()
-    cursor.execute('SELECT * FROM personas')
-    personas = cursor.fetchall()
-    return render_template('index.html',personas=personas)
+    cursor.execute('SELECT * FROM Personas')
+    usuario = cursor.fetchall() 
+    return render_template('index.html',   personas = usuario)
 
-@app.route('/registrar', methods=['POST'])
+
+@app.route('/registrar', methods=['GET','POST'])
 def registrar_usuarios():
-    NOMBRE = request.form['nombre'],
-    APELLIDO = request.form['apellido'],
-    EMAIL = request.form['correo'],
-    DIRECCION = request.form['direccion'],
-    TELEFONO = request.form['telefono'],
-    USUARIO = request.form['usuario'],
-    CONTRASEÑA = request.form['contraseña'],
-    
-    #insertar datos a la tlaba personas
-    
-    cursor.execute("INSERT INTO personas(nombreper,apellidoper,emailper,dirper,telper,usuarioper,contraper)VALUES(%s,%s,%s,%s,%s,%s,%s)",(NOMBRE,APELLIDO,EMAIL,DIRECCION,TELEFONO,USUARIO,CONTRASEÑA))
-    
-    db.commit()
-    flash('usuario creado correctament','success')
-    return redirect(url_for('registrar.html'))
+
+    if request.method == 'POST':
+        NOMBRE = request.form.get('nombrePer')
+        APELLIDO = request.form.get('apellidoPer')
+        EMAIL = request.form.get('correoPer')
+        DIRECCION = request.form.get('direccionPer')
+        TELEFONO = request.form.get('telefonoPer')
+        USUARIO = request.form.get('usuarioPer')
+        CONTRASENA = request.form.get('contrasenaPer')
+        contrasenaencriptada = encriptarcontra(CONTRASENA)
+        
+        #insertar datos a la tlaba personas
+        
+        cursor.execute("INSERT INTO Personas(nombreper,apellidoper,emailper,dirper,telper,usuarioper,contraper)VALUES(%s,%s,%s,%s,%s,%s,%s)",(NOMBRE,APELLIDO,EMAIL,DIRECCION,TELEFONO,USUARIO,contrasenaencriptada))
+        db.commit()
+        flash('usuario creado correctament','success')
+        return redirect(url_for('registrar_usuarios()'))
+    return render_template('registrar.html')
 
 @app.route("/editar/<int:id>", methods=["POST", "GET"])
 def editar_usuario(id):
@@ -52,7 +81,7 @@ def editar_usuario(id):
         usuarioper = request.form.get("usuario")
         contraper = request.form.get("contraseña")
          
-        sql = "update personas set nombreper=%s, apellidoper=%s,emailper=%s,dirreccionper=%s, telefonoper=%s,usuarioper=%s, contraper=%s where idpersona=%s"
+        sql = "update Personas set nombreper=%s, apellidoper=%s,emailper=%s,dirreccionper=%s, telefonoper=%s,usuarioper=%s, contraper=%s where idpersona=%s"
         cursor.execute(
             sql,
             (

@@ -8,6 +8,7 @@
 </head>
 <body>
 <div class="container">
+    <h2>BIENVENIDO,{{ usuario }}</h2>
     <h1>LISTADO DE USUARIOS</h1>
     <table>
 
@@ -19,20 +20,26 @@
         <th>DIRECCION</th>
         <th>TELEFONO</th>
         <th>USUARIO</th>
+        <th>CONTRASEÑA</th>
+        <th>ACCIONES</th>
 
     </tr>
 
         <tbody>
-            {% for personas in personas %}
+            {% for usuario in usuario %}
             <tr>
-                <td>{{personas[0] }}</td>
-                <td>{{personas[1] }}</td>
-                <td>{{personas[2] }}</td>
-                <td>{{personas[3] }}</td>
-                <td>{{personas[4] }}</td>
-                <td>{{personas[5] }}</td>
-                <td>{{personas[6]}}</td>
+                <td>{{usuario[0] }}</td>
+                <td>{{usuario[1] }}</td>
+                <td>{{usuario[2] }}</td>
+                <td>{{usuario[3] }}</td>
+                <td>{{usuario[4] }}</td>
+                <td>{{usuario[5] }}</td>
+                <td>{{usuario[6]}}</td>
             </tr>
+            <td>
+                <a href="{{url_for('editar_usuario', id=usuario[0])}}">editar</a>
+                <a href="{{url_for('eliminar_usuario',id=usuario[0])}}">eliminar</a>
+            </td>
             {% endfor %}
         </tbody>
         
