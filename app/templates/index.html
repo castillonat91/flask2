@@ -8,7 +8,7 @@
 </head>
 <body>
 <div class="container">
-    <h2>BIENVENIDO,{{ usuario }}</h2>
+    <h2>BIENVENIDO</h2>
     <h1>LISTADO DE USUARIOS</h1>
     <table>
 
@@ -35,6 +35,7 @@
                 <td>{{usuario[4] }}</td>
                 <td>{{usuario[5] }}</td>
                 <td>{{usuario[6]}}</td>
+                <td>{{usuario[7]}}</td>
             </tr>
             <td>
                 <a href="{{url_for('editar_usuario', id=usuario[0])}}">editar</a>

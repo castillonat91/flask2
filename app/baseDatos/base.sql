@@ -9,7 +9,7 @@ emailper varchar(60) not null,
 dirper varchar(60) not null,
 telper varchar(60) not null,
 usuarioper varchar(60) not null,
-contraper varchar(60) not null
+contraper varchar(255) not null
 );
 describe Personas;
 
